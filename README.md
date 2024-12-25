@@ -1,13 +1,11 @@
-template
+ansible-uptime-kuma
 =========
 
-Template for Ansible role monorepos.
+[![linters](https://github.com/corvus-migratorius/ansible-uptime-kuma/actions/workflows/linters.yaml/badge.svg)](https://github.com/corvus-migratorius/ansible-uptime-kuma/actions/workflows/linters.yaml)
+[![kics](https://github.com/corvus-migratorius/ansible-uptime-kuma/actions/workflows/kics.yml/badge.svg)](https://github.com/corvus-migratorius/ansible-uptime-kuma/actions/workflows/kics.yml)
+[![molecule](https://github.com/corvus-migratorius/ansible-uptime-kuma/actions/workflows/molecule.yaml/badge.svg)](https://github.com/corvus-migratorius/ansible-uptime-kuma/actions/workflows/molecule.yaml)
 
-⚠️ Do not forget to update:
-
-- `meta/main.yml`
-- Conda/Mamba manifests
-- this README =)
+Deploy and confugure a containerized instance of [uptime-kuma](https://github.com/louislam/uptime-kuma).
 
 Requirements
 ------------
@@ -17,20 +15,22 @@ None
 Role Variables
 --------------
 
-None
+- `kuma_img_version`: "1.23.16-alpine"
+- `kuma_project_dir`: "/uptime-kuma"
+- `kuma_port`: 3001
+- `kuma_api_version`: "1.2.0"
+- `kuma_limit_cpus`: 2
+- `kuma_limit_ram`: "2G"
 
 Dependencies
 ------------
 
-None
+- `genlab.docker_ubuntu`
 
 Example Playbook
 ----------------
 
-```yaml
-roles:
-    - role: genlab.template
-```
+See `molecule/default/converge`.
 
 License
 -------

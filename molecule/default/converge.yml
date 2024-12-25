@@ -1,5 +1,19 @@
 ---
 - name: Converge
   hosts: all
+  vars:
+    test_admin_username: admin
+    # kics-scan ignore-line
+    test_admin_password: SDjj3$k4g9dhsjd__1dj
   roles:
-    - role: genlab.template
+    - genlab.docker_ubuntu
+  tasks:
+    - name: "Test the role"
+      tags: [role]
+      ansible.builtin.include_role:
+        name: "genlab.uptime_kuma"
+      vars:
+        kuma_api_username: "{{ test_admin_username }}"
+        kuma_api_password: "{{ test_admin_password }}"
+        kuma_mon_push_names:
+          - "push-test"

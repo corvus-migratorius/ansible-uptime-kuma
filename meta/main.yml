@@ -1,6 +1,6 @@
 ---
 galaxy_info:
-  role_name: "template"
+  role_name: "uptime_kuma"
   namespace: genlab
   author: "Alexander Gorelyshev"
   company: "Genlab, LLC"
@@ -10,8 +10,8 @@ galaxy_info:
 
   platforms:
     - name: "Ubuntu"
-      versions: [ "focal", "jammy" ]
+      versions: ["focal", "jammy"]
 
-  galaxy_tags: [ ]
+  galaxy_tags: []
 
 dependencies: []
