@@ -1,0 +1,31 @@
+---
+- name: "Wait for uptime-kuma to start"
+  ansible.builtin.wait_for:
+    port: "{{ kuma_port }}"
+    timeout: 30
+
+- name: "Set up uptime-kuma credentials"
+  lucasheld.uptime_kuma.setup:
+    api_url: http://127.0.0.1:{{ kuma_port }}
+    api_username: "{{ kuma_api_username }}"
+    api_password: "{{ kuma_api_password }}"
+
+- name: "Login with credentials once and register the result"
+  register: result
+  lucasheld.uptime_kuma.login:
+    api_url: http://127.0.0.1:{{ kuma_port }}
+    api_username: "{{ kuma_api_username }}"
+    api_password: "{{ kuma_api_password }}"
+
+- name: "Extract the token from the result and set it as fact"
+  ansible.builtin.set_fact:
+    kuma_api_token: "{{ result.token }}"
+
+- name: "Create push monitors"
+  loop: "{{ kuma_mon_push_names }}"
+  lucasheld.uptime_kuma.monitor:
+    api_url: http://127.0.0.1:{{ kuma_port }}
+    api_token: "{{ kuma_api_token }}"
+    name: "{{ item }}"
+    type: push
+    state: present
