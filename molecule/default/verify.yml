@@ -4,8 +4,20 @@
   gather_facts: false
   any_errors_fatal: true
 
+  pre_tasks:
+    - name: Include default vars
+      ansible.builtin.include_vars:
+        dir: '{{ lookup("env", "MOLECULE_PROJECT_DIRECTORY") }}/defaults/'
+        extensions:
+          - 'yml'
+
   tasks:
-    - name: "Mock verification task"
-      changed_when: false
-      ansible.builtin.command:
-        cmd: "true"
+    - name: Verify uptime-kuma responds to HTTP requests
+      register: this
+      until: this is ansible.builtin.success
+      retries: 3
+      delay: 3
+      ansible.builtin.uri:
+        url: "http://127.0.0.1:{{ kuma_port }}"
+        method: GET
+        status_code: 200

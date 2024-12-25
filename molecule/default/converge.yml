@@ -2,4 +2,14 @@
 - name: Converge
   hosts: all
   roles:
-    - role: genlab.template
+    - genlab.docker_ubuntu
+  tasks:
+    - name: "Test the role"
+      tags: [role]
+      ansible.builtin.include_role:
+        name: "genlab.uptime_kuma"
+      vars:
+        kuma_api_username: admin
+        kuma_api_password: secret123
+        kuma_mon_push_names:
+          - "push-test"
