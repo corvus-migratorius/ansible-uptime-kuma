@@ -6,8 +6,6 @@ services:
     container_name: uptime-kuma
     volumes:
       - {{ kuma_project_dir }}/data:/app/data
-    ports:
-      - "0.0.0.0:{{ kuma_port }}:{{ kuma_port }}"
     restart: unless-stopped
     cap_drop:
       - ALL
@@ -21,6 +19,7 @@ services:
         limits:
           cpus: {{ kuma_limit_cpus }}
           memory: {{ kuma_limit_ram }}
+    network_mode: host
     healthcheck:
       test: ["CMD", "extra/healthcheck"]
       interval: 60s
