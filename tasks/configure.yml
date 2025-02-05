@@ -22,10 +22,12 @@
     kuma_api_token: "{{ result.token }}"
 
 - name: "Create push monitors"
-  loop: "{{ kuma_mon_push_names }}"
+  loop: "{{ kuma_monitors_push }}"
   lucasheld.uptime_kuma.monitor:
     api_url: http://127.0.0.1:{{ kuma_port }}
     api_token: "{{ kuma_api_token }}"
-    name: "{{ item }}"
+    name: "{{ item.name }}"
+    interval: "{{ item.interval | default(60) }}"
+    description: "{{ item.description | default(omit) }}"
     type: push
     state: present
