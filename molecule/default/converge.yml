@@ -15,7 +15,8 @@
       vars:
         kuma_api_username: "{{ test_admin_username }}"
         kuma_api_password: "{{ test_admin_password }}"
-        kuma_monitors_push:
+        kuma_monitors:
           - name: "push-test"
+            type: push
             interval: 30
             description: "Test push monitor"
