@@ -34,8 +34,20 @@
         api_username: "{{ test_admin_username }}"
         api_password: "{{ test_admin_password }}"
 
-    - name: "Check that the expected monitor is present"
+    - name: "Check that the expected monitor exists"
       ansible.builtin.assert:
         that: "monitors.monitors | selectattr('name', 'equalto', 'push-test') | list | length > 0"
-        success_msg: "Found the expected push monitor"
-        fail_msg: "Missing the expected push monitor"
+        success_msg: "The expected push monitor is configured correcly"
+        fail_msg: "The expected push monitor is missing or incorrectly configured"
+
+    - name: "Check that the expected monitor push interval is correctly set"
+      ansible.builtin.assert:
+        that: "monitors.monitors | selectattr('interval', 'equalto', 30) | list | length > 0"
+        success_msg: "The expected push monitor is configured correcly"
+        fail_msg: "The expected push monitor is missing or incorrectly configured"
+
+    - name: "Check that the expected monitor description is correctly set"
+      ansible.builtin.assert:
+        that: "monitors.monitors | selectattr('description', 'equalto', 'Test push monitor') | list | length > 0"
+        success_msg: "The expected push monitor is configured correcly"
+        fail_msg: "The expected push monitor is missing or incorrectly configured"
