@@ -41,9 +41,9 @@
     api_url: http://127.0.0.1:{{ kuma_port }}
     api_token: "{{ kuma_api_token }}"
     type: telegram
-    name: Telegram alerts
-    isDefault: true
-    applyExisting: true
+    name: "{{ kuma_tg_notif_name | default('Telegram alerts') }}"
+    isDefault: "{{ kuma_tg_notif_is_default | default(true) }}"
+    applyExisting: "{{ kuma_tg_notif_apply_existing | default(true) }}"
     telegramBotToken: "{{ kuma_tg_bot_token }}"
     telegramChatID: "{{ kuma_tg_chat_id }}"
-    state: present
+    state: "{{ kuma_tg_notif_state | default('present') }}"
