@@ -32,3 +32,18 @@
     interval: "{{ item.interval | default(60) }}"
     description: "{{ item.description | default(omit) }}"
     url: "{{ item.url | default(omit) }}"
+
+- name: "Add Telegram notifications"
+  when:
+    - kuma_tg_bot_token is defined
+    - kuma_tg_chat_id is defined
+  lucasheld.uptime_kuma.notification:
+    api_url: http://127.0.0.1:{{ kuma_port }}
+    api_token: "{{ kuma_api_token }}"
+    type: telegram
+    name: Telegram alerts
+    isDefault: true
+    applyExisting: true
+    telegramBotToken: "{{ kuma_tg_bot_token }}"
+    telegramChatID: "{{ kuma_tg_chat_id }}"
+    state: present
