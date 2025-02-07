@@ -21,6 +21,15 @@
   ansible.builtin.set_fact:
     kuma_api_token: "{{ result.token }}"
 
+- name: "Create monitor groups"
+  when: kuma_monitor_groups
+  loop: "{{ kuma_monitor_groups }}"
+  lucasheld.uptime_kuma.monitor:
+    api_url: http://127.0.0.1:{{ kuma_port }}
+    api_token: "{{ kuma_api_token }}"
+    type: "group"
+    name: "{{ item }}"
+
 - name: "Create monitors"
   loop: "{{ kuma_monitors }}"
   lucasheld.uptime_kuma.monitor:
@@ -34,6 +43,7 @@
     port: "{{ item.port | default(omit) }}"
     interval: "{{ item.interval | default(60) }}"
     description: "{{ item.description | default(omit) }}"
+    parent_name: "{{ item.parent_name | default(omit) }}"
     state: present
 
 - name: "Add Telegram notifications"
