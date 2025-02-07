@@ -28,11 +28,13 @@
     api_token: "{{ kuma_api_token }}"
     type: "{{ item.type }}"
     name: "{{ item.name }}"
-    state: present
     upsideDown: "{{ item.upside_down | default(false) }}"
+    url: "{{ item.url | default(omit) }}"
+    hostname: "{{ item.hostname | default(omit) }}"
+    port: "{{ item.port | default(omit) }}"
     interval: "{{ item.interval | default(60) }}"
     description: "{{ item.description | default(omit) }}"
-    url: "{{ item.url | default(omit) }}"
+    state: present
 
 - name: "Add Telegram notifications"
   when:
