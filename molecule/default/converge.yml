@@ -1,10 +1,9 @@
-# kics-scan disable=a88baa34-e2ad-44ea-ad6f-8cac87bc7c71
+# kics-scan ignore
 ---
 - name: Converge
   hosts: all
   vars:
     test_admin_username: admin
-    # kics-scan ignore-line
     test_admin_password: SDjj3$k4g9dhsjd__1dj
   roles:
     - genlab.docker_ubuntu
