@@ -34,20 +34,18 @@
         api_username: "{{ test_admin_username }}"
         api_password: "{{ test_admin_password }}"
 
-    - name: "Check that the expected monitor exists"
-      ansible.builtin.assert:
-        that: "monitors.monitors | selectattr('name', 'equalto', 'push-test') | list | length > 0"
-        success_msg: "The expected push monitor is configured correcly"
-        fail_msg: "The expected push monitor is missing or incorrectly configured"
+    - name: "Get test monitor information"
+      failed_when: monitor_info is not defined
+      ansible.builtin.set_fact:
+        monitor_info: "{{ monitors.monitors | selectattr('name', 'equalto', 'push-test') | list | first }}"
 
-    - name: "Check that the expected monitor push interval is correctly set"
+    - name: "Check test monitor configuration"
+      loop:
+        - {key: "type", value: "push"}
+        - {key: "interval", value: 30}
+        - {key: "description", value: "Test push monitor"}
+        - {key: notificationIDList, value: [1]}   # names are not stored, only integer IDs
       ansible.builtin.assert:
-        that: "monitors.monitors | selectattr('interval', 'equalto', 30) | list | length > 0"
-        success_msg: "The expected push monitor is configured correcly"
-        fail_msg: "The expected push monitor is missing or incorrectly configured"
-
-    - name: "Check that the expected monitor description is correctly set"
-      ansible.builtin.assert:
-        that: "monitors.monitors | selectattr('description', 'equalto', 'Test push monitor') | list | length > 0"
-        success_msg: "The expected push monitor is configured correcly"
-        fail_msg: "The expected push monitor is missing or incorrectly configured"
+        that: "monitor_info[item.key] == item.value"
+        success_msg: "Test monitor has correctly configured {{ item.key }}: {{ item.value }}"
+        fail_msg: "Incorrect test monitor configuration for {{ item.key }}: expected {{ item.value }}, got: {{ monitor_info[item.key] }}"
