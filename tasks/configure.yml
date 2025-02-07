@@ -22,7 +22,7 @@
     kuma_api_token: "{{ result.token }}"
 
 - name: "Create monitor groups"
-  when: kuma_monitor_groups
+  when: kuma_monitor_groups is defined
   loop: "{{ kuma_monitor_groups }}"
   lucasheld.uptime_kuma.monitor:
     api_url: http://127.0.0.1:{{ kuma_port }}
