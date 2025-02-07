@@ -29,6 +29,7 @@
     type: "{{ item.type }}"
     name: "{{ item.name }}"
     state: present
+    upsideDown: "{{ item.upside_down | default(false) }}"
     interval: "{{ item.interval | default(60) }}"
     description: "{{ item.description | default(omit) }}"
     url: "{{ item.url | default(omit) }}"
