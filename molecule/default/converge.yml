@@ -15,6 +15,9 @@
       vars:
         kuma_api_username: "{{ test_admin_username }}"
         kuma_api_password: "{{ test_admin_password }}"
+        kuma_tg_bot_token: 8161628020:AAF9doUFKSwdK4NZ8z58zVpqq0H1EdrKnI1
+        kuma_tg_chat_id: -4877676122
+        kuma_default_notification_names: ["Telegram alerts"]
         kuma_monitors:
           - name: "push-test"
             type: push
