@@ -24,3 +24,4 @@
   ansible.builtin.pip:
     name: "uptime-kuma-api"
     version: "{{ kuma_api_version }}"
+    break_system_packages: true
