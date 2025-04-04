@@ -13,6 +13,9 @@ services:
       - CAP_NET_ADMIN
       - CAP_SETGID
       - CAP_SETUID
+    security_opt:
+      - no-new-privileges:true
+    network_mode: host
     healthcheck:
       test: ["CMD-SHELL", "node extra/healthcheck.js"]
       interval: 60s
@@ -28,9 +31,6 @@ services:
         limits:
           cpus: {{ kuma_limit_cpus }}
           memory: {{ kuma_limit_ram }}
-    network_mode: host
-    security_opt:
-      - no-new-privileges:true
 
 volumes:
   uptime-kuma-data:
