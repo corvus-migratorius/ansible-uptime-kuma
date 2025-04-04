@@ -18,6 +18,10 @@ services:
       interval: 60s
       timeout: 10s
       retries: 3
+    logging:
+      driver: journald
+      options:
+        tag: office-app-{{.ImageID}}
     deploy:
       replicas: 1
       resources:
