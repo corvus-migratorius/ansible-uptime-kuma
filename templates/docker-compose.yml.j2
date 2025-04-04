@@ -13,20 +13,24 @@ services:
       - CAP_NET_ADMIN
       - CAP_SETGID
       - CAP_SETUID
+    security_opt:
+      - no-new-privileges:true
+    network_mode: host
+    healthcheck:
+      test: ["CMD-SHELL", "node extra/healthcheck.js"]
+      interval: 60s
+      timeout: 10s
+      retries: 3
+    logging:
+      driver: journald
+      options:
+        tag: uptime-kuma
     deploy:
       replicas: 1
       resources:
         limits:
           cpus: {{ kuma_limit_cpus }}
           memory: {{ kuma_limit_ram }}
-    network_mode: host
-    healthcheck:
-      test: ["CMD", "extra/healthcheck"]
-      interval: 60s
-      timeout: 30s
-      retries: 5
-    security_opt:
-      - no-new-privileges:true
 
 volumes:
   uptime-kuma-data:
