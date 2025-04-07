@@ -63,3 +63,4 @@
     state: "{{ kuma_tg_notif_state | default('present') }}"
     ignoreTls: "{{ item.ignore_tls | default(false) }}"
     jsonPath: "{{ item.query | default(omit) }}"
+    expectedValue: "{{ item.expected_value | default(omit) }}"
