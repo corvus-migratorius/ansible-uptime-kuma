@@ -62,3 +62,4 @@
     notification_names: "{{ item.notification_names | default(kuma_default_notification_names) }}"
     state: "{{ kuma_tg_notif_state | default('present') }}"
     ignoreTls: "{{ item.ignore_tls | default(false) }}"
+    jsonPath: "{{ item.query | default(omit) }}"
