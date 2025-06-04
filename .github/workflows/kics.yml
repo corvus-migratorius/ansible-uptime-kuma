@@ -14,7 +14,7 @@ jobs:
         name: Check out source code
 
       - name: run a KICS scan
-        uses: checkmarx/kics-github-action@3246fb456a46d1ea8848ae18793c036718b19fe0
+        uses: checkmarx/kics-github-action@c06a133a98c75c2f920014d688015a5fb18095a4
         with:
           path: .
           token: ${{ secrets.GITHUB_TOKEN }}
