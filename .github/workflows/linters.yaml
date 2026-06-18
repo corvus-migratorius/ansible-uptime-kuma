@@ -14,7 +14,7 @@ jobs:
     timeout-minutes: 5
 
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
 
 
       - uses: mamba-org/setup-micromamba@59bcdbae779c639f869cc8e3b223f36692af05c2
